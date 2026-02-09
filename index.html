@@ -257,10 +257,120 @@ function yes() {
             I love you Madhu💗, Mythili❤️, Mookie😘, Mimi💞, Paapa🐥, Kutty 😘🐾💖.
         </p>
     `;
+     setTimeout(startHeartGame, 1500);
 }
 </script>
+    <!-- 💖 CATCH THE HEARTS GAME (ADD-ON) -->
+<style>
+#heartGame {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 222, 225, 0.95);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+#heartBox {
+    background: white;
+    padding: 25px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+    max-width: 360px;
+}
+
+.heart {
+    position: absolute;
+    font-size: 40px;
+    cursor: pointer;
+    animation: floatHeart 6s linear forwards;
+}
+
+@keyframes floatHeart {
+    from {
+        bottom: -50px;
+        opacity: 1;
+    }
+    to {
+        bottom: 110%;
+        opacity: 0;
+    }
+}
+</style>
+
+<div id="heartGame">
+    <div id="heartBox">
+        <h2>One last thing… 💕</h2>
+        <p>
+            Catch the hearts 💖  
+            (Just tap them 😄)
+        </p>
+        <p id="heartCount">Hearts caught: 0</p>
+    </div>
+</div>
+
+<script>
+let heartsCaught = 0;
+let heartInterval;
+
+/* Start game */
+function startHeartGame() {
+    const game = document.getElementById("heartGame");
+    game.style.display = "flex";
+    heartsCaught = 0;
+    document.getElementById("heartCount").innerText = "Hearts caught: 0";
+
+    heartInterval = setInterval(spawnHeart, 800);
+}
+
+/* Create hearts */
+function spawnHeart() {
+    if (heartsCaught >= 5) {
+        endHeartGame();
+        return;
+    }
+
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = "💖";
+    heart.style.left = Math.random() * 90 + "vw";
+
+    heart.onclick = () => {
+        heartsCaught++;
+        heart.remove();
+        document.getElementById("heartCount").innerText =
+            "Hearts caught: " + heartsCaught;
+    };
+
+    document.getElementById("heartGame").appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 6000);
+}
+
+/* End game */
+function endHeartGame() {
+    clearInterval(heartInterval);
+
+    document.getElementById("heartBox").innerHTML = `
+        <h2>You did it 🥹💖</h2>
+        <p>
+            That smile you’re wearing right now…  
+            that’s all I wanted 🤍
+            <br><br>
+            Let’s stay this happy, always 🐱✨
+        </p>
+    `;
+}
+</script>
+<!-- 💖 END OF GAME -->
 
 </body>
 </html>
+
 
 
