@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Kutty 💕</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+}
+
+/* MAIN CARD */
+.box {
+    background: white;
+    width: 90%;
+    max-width: 460px;
+    padding: 30px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+/* TEXT */
+h2 { color: #ff4b6e; }
+p {
+    color: #444;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+/* BUTTONS */
+button {
+    padding: 12px 25px;
+    border-radius: 30px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    background: #ff4b6e;
+    color: white;
+    margin-top: 15px;
+}
+
+#no {
+    background: #ddd;
+    color: #333;
+    position: absolute;
+}
+
+/* 🐱 CAT STICKERS */
+.cat {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    position: absolute;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+    z-index: 3;
+    border-radius: 14px;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+    100% { transform: translateY(0); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 Background Song -->
+<audio id="song">
+    <source src="blue.mp3" type="audio/mpeg">
+</audio>
+
+<!-- CAT BACKGROUND LAYER -->
+<div id="catsLayer"></div>
+
+<div class="box" id="box">
+    <h2>Hey Kutty 😸</h2>
+    <p>
+        This page has cats 🐱, chaos 🐾  
+        and a little mischief… just like you 😏
+    </p>
+    <button onclick="next()">Okayyy 💕</button>
+</div>
+
+<script>
+let step = 0;
+
+/* 🎵 Play music */
+function playSong() {
+    document.getElementById("song").play();
+}
+
+/* 🐱 Scatter cats (generic, few cats) */
+function scatterCats(count = 5) {
+    const layer = document.getElementById("catsLayer");
+    layer.innerHTML = "";
+
+    const cx = window.innerWidth / 2;
+    const cy = window.innerHeight / 2;
+    const safe = 220;
+
+    for (let i = 0; i < count; i++) {
+        placeCat(layer, cx, cy, safe);
+    }
+}
+
+/* 🐱 Scatter ALL 30 cats without overlap (YES page) */
+function scatterAllCats() {
+    const layer = document.getElementById("catsLayer");
+    layer.innerHTML = "";
+
+    const placed = [];
+    const minDist = 160;
+    const cx = window.innerWidth / 2;
+    const cy = window.innerHeight / 2;
+
+    for (let i = 1; i <= 30; i++) {
+        let tries = 0;
+        let x, y, ok;
+
+        do {
+            ok = true;
+            x = Math.random() * (window.innerWidth - 150);
+            y = Math.random() * (window.innerHeight - 150);
+
+            if (Math.abs(x - cx) < 220 && Math.abs(y - cy) < 220) ok = false;
+
+            for (const p of placed) {
+                if (Math.hypot(p.x - x, p.y - y) < minDist) {
+                    ok = false;
+                    break;
+                }
+            }
+            tries++;
+        } while (!ok && tries < 100);
+
+        placed.push({ x, y });
+
+        const img = document.createElement("img");
+        img.src = `cats/cat${i}.jpg`;
+        img.className = "cat";
+        img.style.left = x + "px";
+        img.style.top = y + "px";
+        img.style.transform = `rotate(${Math.random() * 24 - 12}deg)`;
+        img.style.animationDelay = Math.random() * 2 + "s";
+
+        layer.appendChild(img);
+    }
+}
+
+/* Helper */
+function placeCat(layer, cx, cy, safe) {
+    const n = Math.floor(Math.random() * 30) + 1;
+    const img = document.createElement("img");
+
+    let x, y;
+    do {
+        x = Math.random() * (window.innerWidth - 150);
+        y = Math.random() * (window.innerHeight - 150);
+    } while (
+        Math.abs(x - cx) < safe &&
+        Math.abs(y - cy) < safe
+    );
+
+    img.src = `cats/cat${n}.jpg`;
+    img.className = "cat";
+    img.style.left = x + "px";
+    img.style.top = y + "px";
+    img.style.transform = `rotate(${Math.random() * 24 - 12}deg)`;
+    img.style.animationDelay = Math.random() * 2 + "s";
+
+    layer.appendChild(img);
+}
+
+scatterCats();
+
+function next() {
+    step++;
+    scatterCats();
+
+    const box = document.getElementById("box");
+
+    if (step === 1) {
+        box.innerHTML = `
+            <h2>Kutty listen 🐾</h2>
+            <p>
+                Somewhere between ordinary moments,  
+                you became my favourite thought 🤍✨.  
+                Cats are cute… but you?  
+                You make my heart feel at home 🐱💖
+            </p>
+            <button onclick="next()">Next 💕</button>
+        `;
+    }
+    else if (step === 2) {
+        box.innerHTML = `
+            <h2>Just one honest moment 😌</h2>
+            <p>
+                When I think of comfort, warmth, and a soft smile,  
+                it somehow always feels like *you* 🥹💞.
+            </p>
+            <button onclick="showProposal()">Okay 🙈</button>
+        `;
+    }
+}
+
+function showProposal() {
+    scatterCats();
+    const box = document.getElementById("box");
+    box.innerHTML = `
+        <h2>Will you be my Valentine, Kutty? 💖</h2>
+        <p>
+            This question carries all my feelings,  
+            wrapped in love, hope, and a shy smile 🦋🥹
+        </p>
+        <button onclick="playSong()">▶️ Play Song</button><br>
+        <button onclick="yes()">YES 💕</button>
+        <button id="no" onmouseover="moveNo()">NO 😏</button>
+    `;
+}
+
+/* NO button playful movement */
+function moveNo() {
+    const no = document.getElementById("no");
+    no.style.top = Math.random() * 200 + "px";
+    no.style.left = Math.random() * 200 + "px";
+}
+
+function yes() {
+    scatterAllCats();   // 🔥 ONLY CHANGE FOR YES PAGE
+    const box = document.getElementById("box");
+    box.innerHTML = `
+        <h2>My Heart 💗</h2>
+        <p>
+            Miku Kutty 🐱💖,<br><br>
+
+            I truly admire you and the effort you put into making this relationship more beautiful, engaging, and lively ✨.  
+            Just seeing you, hearing your voice, or even thinking about you makes me genuinely happy 🥹❤️.<br><br>
+
+            You are the girl I have always wanted in my life, and I deeply cherish every moment I have spent with you and all the beautiful moments we are yet to create together 🌸🤍.<br><br>
+
+            I promise to always keep you happy, even after our marriage, and to build a joyful, loving, and wonderful family with you 🏡💞.  
+            Let’s love each other more and more until the very end of our lives, baby 💑✨.<br><br>
+
+            I love you — Madhu, Mythili, Mookie, Mimi, Paapa, Kutty 😘🐾💖
+        </p>
+    `;
+}
+</script>
+
+</body>
+</html>
