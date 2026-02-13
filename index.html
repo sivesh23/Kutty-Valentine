@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kutty 💕</title>
 
 <style>
@@ -90,6 +91,12 @@ button {
     text-align: center;
     box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 }
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 
 </style>
 </head>
@@ -345,9 +352,15 @@ function yes() {
 <script>
 let heartsCaught = 0;
 let heartInterval;
+let gameStarted = false;
 
 /* Start game */
 function startHeartGame() {
+    
+    if (gameStarted) return;   // 🚫 prevent double trigger
+    gameStarted = true;
+    
+    document.getElementById("catsLayer").innerHTML = "";
     const game = document.getElementById("heartGame");
     game.style.display = "flex";
     heartsCaught = 0;
@@ -386,7 +399,10 @@ function spawnHeart() {
 function endHeartGame() {
     clearInterval(heartInterval);
 
-    document.getElementById("heartBox").innerHTML = `
+    const box = document.getElementById("heartBox");
+
+    // Step 1 – Sweet message
+    box.innerHTML = `
         <h2>You did it 🥹💖</h2>
         <p>
             That smile you’re wearing right now…  
@@ -395,7 +411,40 @@ function endHeartGame() {
             Let’s stay this happy, always 🐱✨
         </p>
     `;
+
+    // Step 2 – Idea 5 (after 4 seconds)
+    setTimeout(() => {
+        box.innerHTML = `
+            <h2>What I hope you felt 🤍</h2>
+            <p>
+                Seen.<br>
+                Chosen.<br>
+                Calm.<br>
+                Important.<br>
+                Loved.
+            </p>
+        `;
+    }, 4000);
+
+    // Step 3 – Idea 9 + 11 (after 9 seconds)
+    setTimeout(() => {
+        box.innerHTML = `
+            <h2>This page doesn’t disappear 🤍</h2>
+            <p>
+                Neither does how I feel.
+                <br><br>
+                If you reached the end quietly smiling…  
+                that’s perfect ✨
+            </p>
+        `;
+    }, 9000);
+
+    // Step 4 – Envelope Closing Animation (after 14 seconds)
+    setTimeout(() => {
+        showClosingEnvelope();
+    }, 14000);
 }
+
 
     function openEnvelope() {
     document.getElementById("song").play();
@@ -416,11 +465,44 @@ function startMainFlow() {
     document.getElementById("box").style.display = "block";
 }
 
+function showClosingEnvelope() {
+    const game = document.getElementById("heartGame");
+
+    game.innerHTML = `
+        <div style="
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg,#fff0f3,#ffe6ec);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 2s ease;
+        ">
+            <div style="
+                background:white;
+                padding:30px;
+                border-radius:15px;
+                text-align:center;
+                box-shadow:0 20px 40px rgba(0,0,0,0.2);
+            ">
+                <h2>💌 Closing This Gently</h2>
+                <p>
+                    Some feelings don’t end with a page.
+                    <br><br>
+                    They stay.
+                </p>
+            </div>
+        </div>
+    `;
+}
+
+
 </script>
 <!-- 💖 END OF GAME -->
 
 </body>
 </html>
+
 
 
 
