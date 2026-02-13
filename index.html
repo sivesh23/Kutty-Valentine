@@ -76,6 +76,42 @@ button {
 </head>
 
 <body>
+    
+<!-- 💌 ENVELOPE INTRO -->
+<style>
+#envelopeIntro {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg,#fff0f3,#ffe6ec);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+.envelopeBox {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+</style>
+
+<div id="envelopeIntro">
+  <div class="envelopeBox">
+      <h2>For You 💌</h2>
+      <p>Open this slowly, Kutty 🤍</p>
+      <button onclick="openEnvelope()">Open Envelope ✨</button>
+  </div>
+</div>
+
+<!-- 🎵 Background Song -->
+<audio id="song">
+    <source src="blue.mp3" type="audio/mpeg">
+</audio>
+
+<!-- CAT BACKGROUND LAYER -->
+<div id="catsLayer"></div>
 
 <!-- 🎵 Background Song -->
 <audio id="song">
@@ -366,11 +402,18 @@ function endHeartGame() {
         </p>
     `;
 }
+
+    function openEnvelope() {
+    document.getElementById("song").play();
+    document.getElementById("envelopeIntro").style.display = "none";
+}
+
 </script>
 <!-- 💖 END OF GAME -->
 
 </body>
 </html>
+
 
 
 
