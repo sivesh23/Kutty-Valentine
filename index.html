@@ -500,9 +500,10 @@ function endHeartGame() {
 function openEnvelope() {
     const song = document.getElementById("song");
 
-    song.volume = 1;   // 🔥 Reset volume to full
-    song.play();
-    
+    if (song) {
+        song.volume = 1;
+        song.play().catch(() => {});
+    }
     document.getElementById("envelopeIntro").style.display = "none";
     document.getElementById("softChoiceScreen").style.display = "block";    
 }
@@ -565,6 +566,7 @@ let fade = setInterval(() => {
 
 </body>
 </html>
+
 
 
 
