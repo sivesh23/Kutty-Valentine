@@ -72,13 +72,8 @@ button {
     50% { transform: translateY(-14px); }
     100% { transform: translateY(0); }
 }
-</style>
-</head>
-
-<body>
+/* -- 💌 ENVELOPE INTRO */
     
-<!-- 💌 ENVELOPE INTRO -->
-<style>
 #envelopeIntro {
     position: fixed;
     inset: 0;
@@ -95,8 +90,12 @@ button {
     text-align: center;
     box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 }
-</style>
 
+</style>
+</head>
+
+<body>
+    
 <div id="envelopeIntro">
   <div class="envelopeBox">
       <h2>For You 💌</h2>
@@ -105,13 +104,14 @@ button {
   </div>
 </div>
 
-<!-- 🎵 Background Song -->
-<audio id="song">
-    <source src="blue.mp3" type="audio/mpeg">
-</audio>
-
-<!-- CAT BACKGROUND LAYER -->
-<div id="catsLayer"></div>
+    <!-- 🌸 SOFT CHOICE SCREEN -->
+<div id="softChoiceScreen" class="box" style="display:none; z-index:9998;">
+    <h2>Choose what feels like you 🤍</h2>
+    <button onclick="softChoice()">🌸 Peace</button>
+    <button onclick="softChoice()">✨ Warmth</button>
+    <button onclick="softChoice()">🐱 Comfort</button>
+    <button onclick="softChoice()">💖 Love</button>
+</div>
 
 <!-- 🎵 Background Song -->
 <audio id="song">
@@ -261,7 +261,6 @@ function showProposal() {
             This question carries all my feelings,  
             wrapped in love, hope, and a shy smile 🦋🥹
         </p>
-        <button onclick="playSong()">▶️ Play Song</button><br>
         <button onclick="yes()">YES 💕</button>
         <button id="no" onmouseover="moveNo()">NO 🥲</button>
     `;
@@ -406,6 +405,19 @@ function endHeartGame() {
     function openEnvelope() {
     document.getElementById("song").play();
     document.getElementById("envelopeIntro").style.display = "none";
+    document.getElementById("softChoiceScreen").style.display = "block";    
+}
+
+function softChoice() {
+    const screen = document.getElementById("softChoiceScreen");
+    screen.innerHTML = `
+        <p>That makes sense 🤍<br>I’m really glad you’re here.</p>
+        <button onclick="startMainFlow()">Continue</button>
+    `;
+}
+
+function startMainFlow() {
+    document.getElementById("softChoiceScreen").style.display = "none";
 }
 
 </script>
@@ -413,6 +425,7 @@ function endHeartGame() {
 
 </body>
 </html>
+
 
 
 
