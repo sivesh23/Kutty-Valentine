@@ -133,11 +133,6 @@ button {
 <script>
 let step = 0;
 
-/* 🎵 Play music */
-function playSong() {
-    document.getElementById("song").play();
-}
-
 /* 🐱 Scatter cats (generic, few cats) */
 function scatterCats(count = 5) {
     const layer = document.getElementById("catsLayer");
@@ -418,6 +413,7 @@ function softChoice() {
 
 function startMainFlow() {
     document.getElementById("softChoiceScreen").style.display = "none";
+    document.getElementById("box").style.display = "block";
 }
 
 </script>
@@ -425,6 +421,7 @@ function startMainFlow() {
 
 </body>
 </html>
+
 
 
 
