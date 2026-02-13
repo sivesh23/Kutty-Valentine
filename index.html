@@ -253,6 +253,7 @@ function next() {
         document.onclick = showSecret;
     }
     else if (step === 2) {
+        document.onclick = null;
         box.innerHTML = `
             <h2>Just one honest moment 😌</h2>
             <p>
@@ -496,8 +497,12 @@ function endHeartGame() {
 }
 
 
-    function openEnvelope() {
-    document.getElementById("song").play();
+function openEnvelope() {
+    const song = document.getElementById("song");
+
+    song.volume = 1;   // 🔥 Reset volume to full
+    song.play();
+    
     document.getElementById("envelopeIntro").style.display = "none";
     document.getElementById("softChoiceScreen").style.display = "block";    
 }
@@ -560,6 +565,7 @@ let fade = setInterval(() => {
 
 </body>
 </html>
+
 
 
 
